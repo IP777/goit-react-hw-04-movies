@@ -7,7 +7,6 @@ import Reviews from "./reviews/Reviews";
 
 const MovieCard = ({ movieObj, match, onGoBack }) => {
 	const {
-		id,
 		original_title,
 		poster_path,
 		release_date,
@@ -57,9 +56,7 @@ const MovieCard = ({ movieObj, match, onGoBack }) => {
 			<p>Addition information</p>
 			<ul>
 				<li>
-					<Link to={`${match.url}/cast`} prop={id}>
-						Cast
-					</Link>
+					<Link to={`${match.url}/cast`}>Cast</Link>
 				</li>
 				<li>
 					<Link to={`${match.url}/reviews`}>Reviews</Link>
