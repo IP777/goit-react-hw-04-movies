@@ -12,7 +12,6 @@ export default class SearchForm extends Component {
 
 	componentDidMount() {
 		const qwery = queryString.parse(this.props.location.search).qwery;
-		console.log(qwery);
 
 		if (qwery) {
 			this.setState({ value: qwery });
@@ -27,7 +26,6 @@ export default class SearchForm extends Component {
 
 	handelSubmit = (e) => {
 		e.preventDefault();
-		//console.log(this.state.value);
 
 		//реализация если предидущая категория не совпадает
 		this.searchFunc(this.state.value);

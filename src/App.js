@@ -18,6 +18,7 @@ export default class App extends Component {
 					<Route path="/" exact component={HomeList} />
 					<Route path="/movies/:movieId" component={ElementList} />
 					<Route path="/movies" component={SearchForm} />
+					{/* default page<Route component={NotFoundPage} /> */}
 				</Switch>
 			</div>
 		);

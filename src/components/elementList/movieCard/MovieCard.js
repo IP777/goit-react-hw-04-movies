@@ -1,12 +1,14 @@
 import React from "react";
-import { Route, Link, withRouter } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 //------------------------------------------
 import style from "./MovieCard.module.css";
 import Cast from "./cast/Cast";
 import Reviews from "./reviews/Reviews";
+import CustomLink from "./customLink/CustomLink";
 
-const MovieCard = ({ movieObj, match, onGoBack }) => {
+const MovieCard = ({ movieObj, match, onGoBack, location }) => {
 	const {
+		id,
 		original_title,
 		poster_path,
 		release_date,
@@ -14,7 +16,7 @@ const MovieCard = ({ movieObj, match, onGoBack }) => {
 		genres,
 		vote_average,
 	} = movieObj;
-	//console.log(match);
+	//console.log(location.state.from);
 
 	const imagePosterPath = (src) => {
 		return `https://image.tmdb.org/t/p/w300_and_h450_bestv2/${src}`;
@@ -29,7 +31,7 @@ const MovieCard = ({ movieObj, match, onGoBack }) => {
 				<img
 					alt={original_title}
 					src={imagePosterPath(poster_path)}
-					className={style.img}
+					// className={style.img}
 				/>
 				<div className={style.descriptionWrapper}>
 					<div>
@@ -56,15 +58,21 @@ const MovieCard = ({ movieObj, match, onGoBack }) => {
 			<p>Addition information</p>
 			<ul>
 				<li>
-					<Link to={`${match.url}/cast`}>Cast</Link>
+					<CustomLink name={"Cast"} />
 				</li>
 				<li>
-					<Link to={`${match.url}/reviews`}>Reviews</Link>
+					<CustomLink name={"Reviews"} />
 				</li>
 			</ul>
 			<hr />
-			<Route path={`${match.url}/cast`} component={Cast} />
-			<Route path={`${match.url}/reviews`} component={Reviews} />
+			<Route
+				path={`${match.url}/cast`}
+				render={(props) => <Cast {...props} pageId={id} />}
+			/>
+			<Route
+				path={`${match.url}/reviews`}
+				render={(props) => <Reviews {...props} pageId={id} />}
+			/>
 		</>
 	);
 };
