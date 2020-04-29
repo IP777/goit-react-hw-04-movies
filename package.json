@@ -10,8 +10,6 @@
 		"query-string": "^6.12.1",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
-		"react-loadable": "^5.5.0",
-		"react-loader-spinner": "^3.1.14",
 		"react-router-dom": "^5.1.2",
 		"react-scripts": "3.4.1"
 	},
