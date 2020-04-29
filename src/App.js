@@ -1,12 +1,26 @@
-import React, { Component } from "react";
+import React, { Component, lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
-import "./App.css";
 //--------------------------------------------------
+import "./App.css";
 import Header from "./components/header/Header";
-import HomeList from "./pages/homePage/HomePage";
-import ElementList from "./components/cardPage/ElementList";
-import SearchForm from "./pages/searchPage/SearchPage";
+//---Синхронный импорт
+//import HomePage from "./pages/homePage/HomePage";
+//import ElementList from "./components/cardPage/ElementList";
+//import SearchForm from "./pages/searchPage/SearchPage";
 import NotFoundPage from "./pages/NotFoundPage";
+const AsyncHome = lazy(() =>
+	import("./pages/homePage/HomePage" /* webpackChunkName: "home-page" */)
+);
+const AsyncElementList = lazy(() =>
+	import(
+		"./components/cardPage/ElementList" /* webpackChunkName: "ElementList-page" */
+	)
+);
+const AsyncSearchForm = lazy(() =>
+	import(
+		"./pages/searchPage/SearchPage" /* webpackChunkName: "Search-page" */
+	)
+);
 
 export default class App extends Component {
 	state = {};
@@ -15,12 +29,21 @@ export default class App extends Component {
 		return (
 			<div className="App">
 				<Header />
-				<Switch>
-					<Route path="/" exact component={HomeList} />
-					<Route path="/movies/:movieId" component={ElementList} />
-					<Route path="/movies" component={SearchForm} />
-					<Route component={NotFoundPage} />
-				</Switch>
+				<Suspense
+					fallback={
+						<div className={"loader"}>Please wait Loading...</div>
+					}
+				>
+					<Switch>
+						<Route path="/" exact component={AsyncHome} />
+						<Route
+							path="/movies/:movieId"
+							component={AsyncElementList}
+						/>
+						<Route path="/movies" component={AsyncSearchForm} />
+						<Route component={NotFoundPage} />
+					</Switch>
+				</Suspense>
 			</div>
 		);
 	}

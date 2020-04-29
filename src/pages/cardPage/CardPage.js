@@ -1,12 +1,24 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Route, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 //------------------------------------------
 import style from "./CardPage.module.css";
 import AdditionInformation from "./../../components/cardPage/additionInformation/AdditionInformation";
-import Cast from "./../../components/cardPage/additionInformation/cast/Cast";
-import Reviews from "./../../components/cardPage/additionInformation/reviews/Reviews";
+//---Синхронный импорт
+//import Cast from "./../../components/cardPage/additionInformation/cast/Cast";
+//import Reviews from "./../../components/cardPage/additionInformation/reviews/Reviews";
+const AsyncCast = lazy(() =>
+	import(
+		"./../../components/cardPage/additionInformation/cast/Cast" /* webpackChunkName: "cast" */
+	)
+);
+const AsyncReviews = lazy(() =>
+	import(
+		"./../../components/cardPage/additionInformation/reviews/Reviews" /* webpackChunkName: "reviews" */
+	)
+);
 
+//Хелперы
 const votePercent = (vote) => vote * 10;
 const getYear = (date) => date.slice(0, 4);
 const imagePosterPath = (src) => {
@@ -80,14 +92,20 @@ const MovieCard = ({ movieObj, onGoBack, match }) => {
 			</div>
 			<AdditionInformation />
 			<hr className={style.hr} />
-			<Route
-				path={`${match.url}/cast`}
-				render={(props) => <Cast {...props} pageId={id} />}
-			/>
-			<Route
-				path={`${match.url}/reviews`}
-				render={(props) => <Reviews {...props} pageId={id} />}
-			/>
+			<Suspense
+				fallback={
+					<div className={"loader"}>Please wait Loading...</div>
+				}
+			>
+				<Route
+					path={`${match.url}/cast`}
+					render={(props) => <AsyncCast {...props} pageId={id} />}
+				/>
+				<Route
+					path={`${match.url}/reviews`}
+					render={(props) => <AsyncReviews {...props} pageId={id} />}
+				/>
+			</Suspense>
 		</>
 	);
 };
