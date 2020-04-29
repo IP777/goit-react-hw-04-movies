@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { movieIdRequest } from "./../axiosRequest/AxiosRequest";
 //--------------------------------------------------------------
-import MovieCard from "./movieCard/MovieCard";
+import CardPage from "../../pages/cardPage/CardPage";
 
 const getId = (props) => props.match.params.movieId;
 
@@ -9,10 +9,18 @@ export default class ElementList extends Component {
 	state = { movieObj: null };
 
 	componentDidMount() {
-		movieIdRequest(getId(this.props)).then((movieObj) =>
-			this.setState({ movieObj: movieObj.data })
-		);
+		this.fetchMovieId();
 	}
+
+	fetchMovieId = async () => {
+		try {
+			movieIdRequest(getId(this.props)).then((movieObj) => {
+				this.setState({ movieObj: movieObj.data });
+			});
+		} catch (error) {
+			console.log("error", error);
+		}
+	};
 
 	onGoBack = () => {
 		const { history, location } = this.props;
@@ -25,10 +33,11 @@ export default class ElementList extends Component {
 
 	render() {
 		const { movieObj } = this.state;
+
 		return (
 			<>
 				{movieObj && (
-					<MovieCard movieObj={movieObj} onGoBack={this.onGoBack} />
+					<CardPage movieObj={movieObj} onGoBack={this.onGoBack} />
 				)}
 			</>
 		);

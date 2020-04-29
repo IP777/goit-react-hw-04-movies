@@ -3,9 +3,10 @@ import { Switch, Route } from "react-router-dom";
 import "./App.css";
 //--------------------------------------------------
 import Header from "./components/header/Header";
-import HomeList from "./components/homeList/HomeList";
-import ElementList from "./components/elementList/ElementList";
-import SearchForm from "./components/searchForm/SearchForm";
+import HomeList from "./pages/homePage/HomePage";
+import ElementList from "./components/cardPage/ElementList";
+import SearchForm from "./pages/searchPage/SearchPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 export default class App extends Component {
 	state = {};
@@ -18,7 +19,7 @@ export default class App extends Component {
 					<Route path="/" exact component={HomeList} />
 					<Route path="/movies/:movieId" component={ElementList} />
 					<Route path="/movies" component={SearchForm} />
-					{/* default page<Route component={NotFoundPage} /> */}
+					<Route component={NotFoundPage} />
 				</Switch>
 			</div>
 		);

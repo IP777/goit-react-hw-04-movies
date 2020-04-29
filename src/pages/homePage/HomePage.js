@@ -2,17 +2,19 @@ import React, { Component } from "react";
 import style from "./HomeList.module.css";
 import { Link } from "react-router-dom";
 
-import { popularRequest } from "./../axiosRequest/AxiosRequest";
+import { popularRequest } from "../../components/axiosRequest/AxiosRequest";
 
 export default class HomeList extends Component {
 	state = { home_list: [] };
 
 	componentDidMount() {
-		popularRequest().then((response) => {
-			this.setState({
-				home_list: response.data.results,
-			});
-		});
+		popularRequest()
+			.then((response) => {
+				this.setState({
+					home_list: response.data.results,
+				});
+			})
+			.catch((error) => this.setState({ error }));
 	}
 
 	render() {
