@@ -14,7 +14,7 @@ export default class HomeList extends Component {
 					home_list: response.data.results,
 				});
 			})
-			.catch((error) => this.setState({ error }));
+			.catch((error) => console.log("Home page", error));
 	}
 
 	render() {

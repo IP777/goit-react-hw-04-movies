@@ -12,14 +12,15 @@ export default class ElementList extends Component {
 		this.fetchMovieId();
 	}
 
-	fetchMovieId = async () => {
-		try {
-			movieIdRequest(getId(this.props)).then((movieObj) => {
+	fetchMovieId = () => {
+		movieIdRequest(getId(this.props))
+			.then((movieObj) => {
 				this.setState({ movieObj: movieObj.data });
+			})
+			.catch((error) => {
+				this.props.history.replace("/error");
+				console.log("Card page", error);
 			});
-		} catch (error) {
-			console.log("error", error);
-		}
 	};
 
 	onGoBack = () => {
