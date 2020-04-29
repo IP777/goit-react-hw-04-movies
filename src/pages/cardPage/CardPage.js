@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 //------------------------------------------
 import style from "./CardPage.module.css";
 import AdditionInformation from "./../../components/cardPage/additionInformation/AdditionInformation";
@@ -21,9 +22,7 @@ const imageBackdropPath = (src) => {
 	return `https://via.placeholder.com/1920x800?text=No poster`;
 };
 
-//https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/ocUrMYbdjknu2TwzMHKT9PBBQRw.jpg
-
-const MovieCard = ({ movieObj, match, onGoBack }) => {
+const MovieCard = ({ movieObj, onGoBack, match }) => {
 	const {
 		id,
 		original_title,
@@ -91,6 +90,11 @@ const MovieCard = ({ movieObj, match, onGoBack }) => {
 			/>
 		</>
 	);
+};
+
+MovieCard.propTypes = {
+	movieObj: PropTypes.object.isRequired,
+	onGoBack: PropTypes.func.isRequired,
 };
 
 export default withRouter(MovieCard);

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const SearchList = ({ qweryList, location }) => {
 	return (
@@ -18,6 +19,10 @@ const SearchList = ({ qweryList, location }) => {
 			))}
 		</ul>
 	);
+};
+
+SearchList.propTypes = {
+	qweryList: PropTypes.array.isRequired,
 };
 
 export default withRouter(SearchList);
